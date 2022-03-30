@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <title>Statik Werkzeugkasten</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <link href="./styles/main.css" rel="stylesheet" type="text/css">
+    <link href="./styles/contextMenu.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+    <script type="module" src="./src/index.js"></script>
+
+</head>
+
+<body>
+
+<div class="grid-container">
+
+    <div class="header">
+        <div id="input-container">
+
+            <!-- <h2>Statik Werkzeugkasten</h2> -->
+            <div class="topnav" id="myTopnav">
+                <a href="javascript:tangens();">tangens</a>
+                <a href="javascript:gleichungssystem();">Gleichungssystem</a>
+                <!-- <a href="donjuan.html">Juan</a> -->
+                <a href="javascript:tangens();">Spannungen</a>
+                <!-- <a href="javascript:void(0);" class="info" onclick="tangens()">
+                «Links on/off»
+                </a> -->
+            </div>
+        </div>
+    </div>
+
+
+    <div class="topLeft" style="background-color:#D8D8D8;">
+
+        <div id="gleichungssystem_top">
+
+            <p>lineares Gleichungssystem [K] * {U} = {R}</p>
+
+            <label>Anzahl Gleichungen :</label>
+            <input type="number" id="input_neq" name="neq" class="input_int" value="4" width="10px">
+            <label>Anzahl rechte Seiten :</label>
+            <input type="number" id="input_nLF" name="nLF" class="input_int" value="2">
+            <br><br>
+
+
+            <table>
+                <tbody>
+                <tr>
+                    <td>
+                        <button type="button" class="buttonTable" id="resize">resize Tabelle</button>
+                    </td>
+                    <td>
+                        <button type="button" class="buttonTable" id="clearTable">clear Tabelle</button>
+                    </td>
+                    <td>
+                        <button type="button" class="buttonTable" id="rechnen">Rechnen</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+
+    <div class="topRight" style="background-color:#D8D8D8;">
+
+        <div id="gleichungssystem_daten">
+            <p>
+                <button type="button" id="readFile">Daten einlesen</button>
+            </p>
+            <p>
+                <button type="button" id="saveFile">Daten speichern</button>
+            </p>
+
+        </div>
+    </div>
+
+    <div class="left" style="background-color:#aaa;">
+
+        <div id="tangens">
+            Berechnung des Tangens
+            <p>
+                Hinweis f&uuml;r Haupttr&auml;gheitsmomente:<br>
+                &nbsp;&nbsp;&nbsp;y=-2*Iyz<br>
+                &nbsp;&nbsp;&nbsp;x=Iy-Iz<br>
+                &nbsp;&nbsp;&nbsp;phi_0=alpha/2
+            </p>
+
+            <form name="tangens_2">
+
+                <table>
+                    <tr>
+                        <td COLSPAN="2">
+                            Eingabe: alpha=arctan(y/x)
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Gegenkathete y
+                        </td>
+                        <td><input type="text" name="y" size="15"></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Ankathete x
+                        </td>
+                        <td><input type="text" name="x" size="15"></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <td> Ergebnis:</td>
+                        <td COLSPAN="2"><input type="button" value="RECHNEN" name="B1" onClick="tan_2()"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            alpha in Grad
+                        </td>
+                        <td COLSPAN="2"><input type="text" name="alpha" size="15"></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+
+        <div id="gleichungssystem">
+            <div id="matrix">
+                <p>Matrix [K]
+                    <label for="input_sym">
+                        <input type="checkbox" id="input_sym" name="sym" class="input_int" value="">
+                        symmetrisches Gleichungssystem
+                    </label>
+
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="middle" style="background-color:#bbb;">
+        <div id="rechteSeite">
+            <p>rechte Seite {R}</p>
+        </div>
+    </div>
+    <div class="right" style="background-color:#ccc;">
+
+        <div id="Loesungsvektor">
+            <p>Lösung {U}</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Statik Werkzeugkasten, 22-März-2022, statikverstehen.de</p>
+    </div>
+
+
+</div>
+
+<nav id="context-menu" class="context-menu">
+    <ul class="context-menu__items">
+        <li class="context-menu__item">
+            <a href="#" class="context-menu__link" data-action="copyFirst"><i class="fa fa-clone"></i> copy first
+                cell
+                value</a>
+        </li>
+        <li class="context-menu__item">
+            <a href="#" class="context-menu__link" data-action="increment_1"><i class="fa fa-plus-square-o"></i>
+                increment by
+                1</a>
+        </li>
+        <li class="context-menu__item">
+            <a href="#" class="context-menu__link" data-action="copy"><i class="fa fa-clipboard"></i> copy to clipboard</a>
+        </li>
+        <li class="context-menu__item">
+            <a href="#" class="context-menu__link" data-action="insert"><i class="fa fa-clipboard"></i> insert from clipboard</a>
+        </li>
+    </ul>
+</nav>
+
+
+</body>
+
+</html>
