@@ -22,7 +22,10 @@
 <body>
 
 <div class="grid-container">
-
+    <!--
+        <div id="rand"  class="rand" style="background-color:#D6D8D8;"></div>
+        <div id="rand1" class="rand1" style="background-color:#D6D8D8;"></div>
+    -->
     <div class="header">
         <div id="input-container">
 
@@ -31,7 +34,7 @@
                 <a href="javascript:tangens();">tangens</a>
                 <a href="javascript:gleichungssystem();">Gleichungssystem</a>
                 <!-- <a href="donjuan.html">Juan</a> -->
-                <a href="javascript:tangens();">Spannungen</a>
+                <a href="javascript:spannungen();">Spannungen</a>
                 <!-- <a href="javascript:void(0);" class="info" onclick="tangens()">
                 «Links on/off»
                 </a> -->
@@ -47,9 +50,9 @@
             <p>lineares Gleichungssystem [K] * {U} = {R}</p>
 
             <label>Anzahl Gleichungen :</label>
-            <input type="number" id="input_neq" name="neq" class="input_int" value="4" width="10px">
+            <input type="number" id="input_neq" name="neq" class="input_int" value="3" width="10px">
             <label>Anzahl rechte Seiten :</label>
-            <input type="number" id="input_nLF" name="nLF" class="input_int" value="2">
+            <input type="number" id="input_nLF" name="nLF" class="input_int" value="1">
             <br><br>
 
 
@@ -78,13 +81,13 @@
         <div id="gleichungssystem_daten">
             <p>
                 <button type="button" id="readFile">Daten einlesen</button>
-            </p>
-            <p>
+
                 <button type="button" id="saveFile">Daten speichern</button>
             </p>
 
         </div>
     </div>
+
 
     <div class="left" style="background-color:#aaa;">
 
@@ -99,29 +102,29 @@
 
             <form name="tangens_2">
 
-                <table>
+                <table class="table_tangens">
                     <tr>
                         <td COLSPAN="2">
                             Eingabe: alpha=arctan(y/x)
                         </td>
                         <td></td>
-                        <td></td>
+
                     </tr>
                     <tr>
                         <td>
                             Gegenkathete y
                         </td>
-                        <td><input type="text" name="y" size="15"></td>
+                        <td><input type="text" name="y" size="10"></td>
                         <td></td>
-                        <td></td>
+
                     </tr>
                     <tr>
                         <td>
                             Ankathete x
                         </td>
-                        <td><input type="text" name="x" size="15"></td>
+                        <td><input type="text" name="x" size="10"></td>
                         <td></td>
-                        <td></td>
+
                     </tr>
 
                     <tr>
@@ -132,8 +135,60 @@
                         <td>
                             alpha in Grad
                         </td>
-                        <td COLSPAN="2"><input type="text" name="alpha" size="15"></td>
+                        <td COLSPAN="2"><input type="text" name="alpha" size="10"></td>
                     </tr>
+                </table>
+            </form>
+        </div>
+
+        <div id="spannungen">
+            Berechnung von Spannungen<br><br>
+
+            <form name="form_sigma">
+
+                <table class="table_sigma">
+                    <tr>
+                        <td align="right">
+                            &sigma;<sub>x</sub> =
+                        </td>
+                        <td><input type="text" name="sigx" size="10"></td>
+                        <td></td>
+                        <td align="right">&sigma;<sub>1</sub> =</td>
+                        <td id="sigma_1"></td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            &sigma;<sub>z</sub> =
+                        </td>
+                        <td><input type="text" name="sigz" size="10"></td>
+                        <td></td>
+                        <td align="right">&sigma;<sub>2</sub> =</td>
+                        <td id="sigma_2"></td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            &tau;<sub>xz</sub> =
+                        </td>
+                        <td><input type="text" name="tauxz" size="10"></td>
+                        <td></td>
+                        <td align="right">&phi;<sub>H</sub> =</td>
+                        <td id="phi_h"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td align="right">&tau;<sub>max</sub> =</td>
+                        <td id="tau_max"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input type="button" value="RECHNEN" name="B1" onClick="calc_sigma()"></td>
+                        <td></td>
+                        <td align="right">&phi;<sup>**</sup> =</td>
+                        <td id="phi_tau"></td>
+                    </tr>
+
                 </table>
             </form>
         </div>
@@ -166,7 +221,7 @@
     </div>
 
     <div class="footer">
-        <p>Statik Werkzeugkasten, 22-März-2022, statikverstehen.de</p>
+        <p>Statik Werkzeugkasten, 2-April-2022, statikverstehen.de</p>
     </div>
 
 
@@ -188,7 +243,8 @@
             <a href="#" class="context-menu__link" data-action="copy"><i class="fa fa-clipboard"></i> copy to clipboard</a>
         </li>
         <li class="context-menu__item">
-            <a href="#" class="context-menu__link" data-action="insert"><i class="fa fa-clipboard"></i> insert from clipboard</a>
+            <a href="#" class="context-menu__link" data-action="insert"><i class="fa fa-clipboard"></i> insert from
+                clipboard</a>
         </li>
     </ul>
 </nav>

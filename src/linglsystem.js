@@ -3,6 +3,7 @@ import * as d3 from "d3";
 import './gauss.js';
 import {gauss} from "./gauss";
 import './dateien.js';
+import {testeZahl} from "./index";
 
 export function gleichungssystem() {
     console.log("in gleichungssystem");
@@ -19,6 +20,7 @@ export function gleichungssystem() {
     const tab5 = document.getElementById("gleichungssystem_daten");
     tab5.style.display = "block";
 
+    document.getElementById("spannungen").style.display = "none";
 
     const rsTabelle = document.getElementById("rechteSeite");
     const matrix = document.getElementById("polygonTable");
@@ -178,7 +180,7 @@ function tabulate(theDiv, id, data, columns) {
                         //$("#polygonTable td").removeClass("highlight");
                         if (col < nSpalten) {
                             str = tableId + '-' + row + '-' + (col + 1);
-                        } else if (col == nSpalten) {
+                        } else if (col === nSpalten) {
                             if (row < npkte) {
                                 str = tableId + '-' + Number(row + 1) + '-1';
                             } else {
@@ -346,7 +348,7 @@ function tabulate(theDiv, id, data, columns) {
 
 export function MMOVE(ev) { // mousemove
     const tableId = ev.target.offsetParent.id;
-    console.log("MMOVE mouseover", tableId, ev.buttons);  // ev.path[3].id
+    //console.log("MMOVE mouseover", tableId, ev.buttons);  // ev.path[3].id
     selectedCellPoly.tableId = tableId;
 
     if (ev.buttons === 1) {
@@ -535,11 +537,11 @@ function clear_polyTabelle() {
 //------------------------------------------------------------------------------------------------
 
 function checkbox_symmetry(ev) {
-    const checkbox = document.getElementById("input_sym");
-    console.log("checkbox", ev.target.checked);
+    //const checkbox = document.getElementById("input_sym");
+    //console.log("checkbox", ev.target.checked);
 
     const tabelle = document.getElementById("polygonTable");
-    let nSpalten = tabelle.rows[0].cells.length;
+    //let nSpalten = tabelle.rows[0].cells.length;
 
     if (ev.target.checked) {
         for (let i = 2; i < tabelle.rows.length; i++) {
@@ -693,7 +695,7 @@ export function resize_Tabelle(idTable, nRowNew, nColNew) {
 
 function rechnen() {
 
-    let i, j, result;
+    let i, j, result, wert;
 
     const checkbox = document.getElementById("input_sym");
 
@@ -709,7 +711,9 @@ function rechnen() {
 
     for (i = 0; i < nZeilen; i++) {
         for (j = 0; j < nSpalten; j++) {
-            c[i][j] = tabelle.rows[i + 1].cells[j + 1].innerText;
+            wert = tabelle.rows[i + 1].cells[j + 1].innerText
+            //console.log("c",i,j,Number(testeZahl(wert)));
+            c[i][j] = Number(testeZahl(wert));
         }
     }
 
@@ -725,7 +729,9 @@ function rechnen() {
 
         for (i = 0; i < nZeilen; i++) {
             for (j = 0; j < nSpalten; j++) {
-                a[i][j] = tabelle.rows[i + 1].cells[j + 1].innerText;
+                wert = tabelle.rows[i + 1].cells[j + 1].innerText;
+                //console.log("a",i,j,Number(testeZahl(wert)));
+                a[i][j] = Number(testeZahl(wert));
                 //console.log(i,j,a[i][j]);
             }
         }
@@ -747,9 +753,17 @@ function rechnen() {
 
         console.log("result = ", result);
 
-        for (i = 0; i < nZeil; i++) {
-            //console.log("b" + i + " = " + b[i]);
-            uTabelle.rows[i + 1].cells[lf + 1].innerText = b[i];
+        if (result === 0) {
+            for (i = 0; i < nZeil; i++) {
+                //console.log("b" + i + " = " + b[i]);
+                uTabelle.rows[i + 1].cells[lf + 1].innerText = b[i];
+            }
+        } else {
+            for (i = 0; i < nZeil; i++) {
+                uTabelle.rows[i + 1].cells[lf + 1].innerText = "";
+            }
+
+            window.alert("S I N G U L A E R E   M A T R I X");
         }
     }
 }

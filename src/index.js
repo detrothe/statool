@@ -1,4 +1,6 @@
 import './linglsystem.js';
+import './spannung.js';
+
 import DetectOS from 'detectos.js'
 import {init_contextmenu} from './contextMenu.js';
 
@@ -16,6 +18,8 @@ export function tangens() {
     tab4.style.display = "none";
     const tab5 = document.getElementById("gleichungssystem_daten");
     tab5.style.display = "none";
+
+    document.getElementById("spannungen").style.display = "none";
 }
 
 window.tangens = tangens;   // jetzt auch in html sichtbar
@@ -40,7 +44,7 @@ function tan_2() {
 
 window.tan_2 = tan_2;
 
-function testeZahl(wert) {
+export function testeZahl(wert) {
     wert = wert.replace(/,/g, '.');
     //console.log('Komma entfernt',wert);
     if (isNaN(wert)) {
@@ -76,3 +80,22 @@ export const app = {
 export const Detect = new DetectOS();
 
 init_contextmenu();
+/*
+window.addEventListener('resize', reportWindowSize);
+
+function reportWindowSize() {
+    console.log("resize", window.innerWidth, window.innerHeight);
+
+    if ( window.innerWidth < 1000) {
+        document.getElementById("rand").style.display = "none";
+        document.getElementById("rand1").style.display = "none";
+    }
+    else {
+        document.getElementById("rand").style.display = "block";
+        document.getElementById("rand1").style.display = "block";
+    }
+
+
+}
+
+     */

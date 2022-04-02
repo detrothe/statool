@@ -6,7 +6,7 @@ export function gauss(n, a, b) {
 //                                                                      *
 //***********************************************************************
 
-    let i, mem, iz, k, j, ii, jj;
+    let i, mem, iz, k, j;
     let c, aji;
 
     console.log("in GAUSS");
@@ -73,6 +73,7 @@ export function gauss(n, a, b) {
     if (a[n - 1][n - 1] === 0.0) {
         console.log("S I N G U L A E R E   M A T R I X      column : ", n);
         console.log("GAUSS");
+        return (1);
     }
 
     b[n - 1] = b[n - 1] / a[n - 1][n - 1];
