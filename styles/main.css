@@ -10,7 +10,7 @@ body {
 
     /* style text */
     text-align: left;
-    font-size: 1em;
+    font-size: 1rem;
     /*12px;  */
     font-family: Verdana, Arial, Helvetica, sans-serif;
 
@@ -234,21 +234,21 @@ td, th {
 }
 
 p {
-    font-size: 1em;
-    line-height: 2em;
+    font-size: 1rem;
+    line-height: 2rem;
 }
 
 button {
-    font-size: 1em;
+    font-size: 1rem;
 }
 
 .buttonTable {
-    font-size: 1em;
+    font-size: 1rem;
     width: 8em;
 }
 
 input {
-    font-size: 1em;
+    font-size: 1rem;
 }
 
 input:invalid {
@@ -261,7 +261,7 @@ input:valid {
 
 .input_int {
     width: 50px;
-    font-size: 1em;
+    font-size: 1rem;
 }
 
 .input_sym {
@@ -288,7 +288,7 @@ input:valid {
     /*position: absolute;
     top: 10px;
     left: 10px;*/
-    /* width: 62em; */
+    /* width: 62rem; */
     /*100%; */
     /* height: 50px; */
 }
@@ -297,7 +297,7 @@ input:valid {
 #polygonTable td {
     background-color: rgb(250, 250, 250);
     white-space: nowrap;
-    font-size: 1em;
+    font-size: 1rem;
 }
 
 #polygonTable td.highlight {
@@ -316,7 +316,7 @@ input:valid {
 #rsTable td {
     background-color: rgb(250, 250, 250);
     white-space: nowrap;
-    font-size: 1em;
+    font-size: 1rem;
 }
 
 #rsTable td.highlight {
@@ -328,7 +328,7 @@ input:valid {
 #uTable td {
     background-color: rgb(250, 250, 250);
     white-space: nowrap;
-    font-size: 1em;
+    font-size: 1rem;
 }
 
 #polygonTable th,
