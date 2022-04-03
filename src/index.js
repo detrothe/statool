@@ -1,8 +1,10 @@
 import './linglsystem.js';
 import './spannung.js';
+import {kdtab} from './kdtab.js';
 
 import DetectOS from 'detectos.js'
 import {init_contextmenu} from './contextMenu.js';
+import {TFVector} from "./TFArray";
 
 export function tangens() {
     console.log("in tangens");
@@ -99,3 +101,17 @@ function reportWindowSize() {
 }
 
      */
+
+/*
+const d2d_ = [0.07, 0.08, 0.10, 0.12, 0.14, 0.16, 0.18, 0.20, 0.22, 0.24];
+const d2d = new TFVector(1, 10);
+d2d.initV(d2d_);
+console.log("d2",d2d._(1),d2d._(2));
+*/
+
+const moment = 50.0, normalkraft = 0.0, d_o = 5, d_u = 5, breite = 1.00, pldicke = 0.20, bn = 2;
+
+
+let as = kdtab(moment, normalkraft, d_o, d_u, breite, pldicke, bn);
+
+console.log("as",as[0],as[1],as[2]);
