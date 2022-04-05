@@ -16,6 +16,8 @@ export function spannungen() {
     tab5.style.display = "none";
 
     document.getElementById("spannungen").style.display = "block";
+    document.getElementById("img_stress").style.display = "block";
+    document.getElementById("kdTabelle").style.display = "none";
 
 }
 

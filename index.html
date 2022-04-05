@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" xmlns="http://www.w3.org/1999/html">
 
 <head>
     <title>Statik Werkzeugkasten</title>
@@ -35,6 +35,7 @@
                 <a href="javascript:gleichungssystem();">Gleichungssystem</a>
                 <!-- <a href="donjuan.html">Juan</a> -->
                 <a href="javascript:spannungen();">Spannungen</a>
+                <a href="javascript:kdtabelle();">kd Bemess</a>
                 <!-- <a href="javascript:void(0);" class="info" onclick="tangens()">
                 «Links on/off»
                 </a> -->
@@ -133,7 +134,7 @@
                     </tr>
                     <tr>
                         <td>
-        First                    alpha in Grad
+                            First alpha in Grad
                         </td>
                         <td COLSPAN="2"><input type="text" name="alpha" size="10"></td>
                     </tr>
@@ -205,6 +206,89 @@
             </div>
         </div>
 
+        <div id="kdTabelle">
+
+            <form name="form_kdTab">
+            <table>
+                <tbody>
+                <tr>
+                    <td class="zelle0">N<sub>Ed</sub> =</td>
+                    <td><input type="text" id="NEd" name="NEd" class="input_kdtab" pattern="[0-9.,eE+-]*">
+                    </td>
+                    <td>[kN]</td>
+                    <td align="right">k<sub>d</sub> =</td>
+                    <td id="kd_value"></td>
+                </tr>
+                <tr>
+                    <td class="zelle0">M<sub>Ed</sub> =</td>
+                    <td><input type="text" id="MEd" name="MEd" class="input_kdtab" pattern="[0-9.,eE+-]*"></td>
+                    <td>[kNm]</td>
+                    <td align="right">k<sub>s</sub> = </td>
+                    <td id="ks_value"></td>
+                </tr>
+                <tr>
+                    <td class="zelle0">Breite b =</td>
+                    <td><input type="text" id="breite" name="Breite" class="input_kdtab" pattern="[0-9.,eE+-]*"></td>
+                    <td>[cm]</td>
+                    <td align="right">k<sub>s1</sub> =</td>
+                    <td id="ks1_value"></td>
+                </tr>
+                <tr>
+                    <td class="zelle0">Höhe h =</td>
+                    <td><input type="text" id="hoehe" name="Hoehe" class="input_kdtab" pattern="[0-9.,eE+-]*"></td>
+                    <td>[cm]</td>
+                    <td align="right">k<sub>s2</sub> =</td>
+                    <td id="ks2_value"></td>
+                </tr>
+                <tr>
+                    <td class="zelle0">d<sub>2</sub> (oben) =</td>
+                    <td><input type="text" id="d2" name="d2" class="input_kdtab" pattern="[0-9.,eE+-]*"></td>
+                    <td>[cm]</td>
+                    <td align="right">A<sub>s2</sub> =</td>
+                    <td id="As2_value"></td>
+                </tr>
+                <tr>
+                    <td class="zelle0">d<sub>1</sub> (unten) =</td>
+                    <td><input type="text" id="d1" name="d1" class="input_kdtab" pattern="[0-9.,eE+-]*"></td>
+                    <td>[cm]</td>
+                    <td align="right">A<sub>s1</sub> =</td>
+                    <td id="As1_value"></td>
+                </tr>
+                <tr>
+                    <td class="zelle0">Beton C =</td>
+                    <td>
+                        <select name="beton" id="beton">
+                            <option value="1">12/15</option>
+                            <option value="2">16/20</option>
+                            <option value="3">20/25</option>
+                            <option value="4" selected>25/30</option>
+                            <option value="5">30/37</option>
+                            <option value="6">35/45</option>
+                            <option value="7">40/50</option>
+                            <option value="8">45/55</option>
+                            <option value="9">50/60</option>
+                        </select>
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="zelle0"></td>
+                    <td>
+                        <select name="ksi" id="ksi_option">
+                            <option value="1">&xi; = 0,45</option>
+                            <option value="2" selected>&xi; = 0,617</option>
+                        </select>
+                    </td>
+                    <td></td>
+                    <td><input type="button" value="RECHNEN" name="B3" onClick="calc_kdtab()"></td>
+                </tr>
+
+                </tbody>
+            </table>
+            </form>
+        </div>
+
     </div>
 
 
@@ -212,6 +296,17 @@
         <div id="rechteSeite">
             <p>rechte Seite {R}</p>
         </div>
+        <div id="img_stress">
+            <picture>
+                <source media="(min-width: 700px) and (orientation:landscape)"
+                        srcset="src/img/stress.png 2x, src/img/stress.png 1x">
+                <source media="(min-width: 600px) and (orientation:portrait)"
+                        srcset="src/img/stress.png 2x, src/img/stress.png 1x">
+                <img src="src/img/stress.png" alt="Vorzeichendefinition" style="width:auto;">
+                <!-- width="612" height="530" -->
+            </picture>
+        </div>
+
     </div>
     <div class="right" style="background-color:#ccc;">
 
@@ -221,7 +316,7 @@
     </div>
 
     <div class="footer">
-        <p>Statik Werkzeugkasten, 3-April-2022, statikverstehen.de</p>
+        <p>Statik Werkzeugkasten, 5-April-2022, statikverstehen.de</p>
     </div>
 
 

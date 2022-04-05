@@ -1,10 +1,11 @@
 import './linglsystem.js';
 import './spannung.js';
+import './kdTabelle.js'
 import {kdtab} from './kdtab.js';
 
 import DetectOS from 'detectos.js'
 import {init_contextmenu} from './contextMenu.js';
-import {TFVector} from "./TFArray";
+//import {TFVector} from "./TFArray";
 
 export function tangens() {
     console.log("in tangens");
@@ -22,6 +23,8 @@ export function tangens() {
     tab5.style.display = "none";
 
     document.getElementById("spannungen").style.display = "none";
+    document.getElementById("img_stress").style.display = "none";
+    document.getElementById("kdTabelle").style.display = "none";
 }
 
 window.tangens = tangens;   // jetzt auch in html sichtbar
@@ -112,6 +115,6 @@ console.log("d2",d2d._(1),d2d._(2));
 const moment = 50.0, normalkraft = 0.0, d_o = 5, d_u = 5, breite = 1.00, pldicke = 0.20, bn = 2;
 
 
-let as = kdtab(moment, normalkraft, d_o, d_u, breite, pldicke, bn);
+let as = kdtab(moment, normalkraft, d_o, d_u, breite, pldicke, bn,1);
 
 console.log("as",as[0],as[1],as[2]);

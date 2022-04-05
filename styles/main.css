@@ -189,6 +189,11 @@ hr {
     background-color: rgb(110, 180, 180);
 }
 
+#kdTabelle {
+    display: none;
+    background-color: rgb(110, 180, 180);
+}
+
 #gleichungssystem {
     display: none;
     /*position: absolute;
@@ -284,6 +289,10 @@ input:valid {
     width: 50px;
 }
 
+.input_kdtab {
+    width: 80px;
+}
+
 #input-container {
     /*position: absolute;
     top: 10px;
@@ -362,4 +371,17 @@ td.selected {
 .table_sigma td {
     /*background-color: orange;*/
     width: 100px;
+}
+
+#img_stress {
+    display: none;
+/*    width: 100%;
+    height: auto;
+
+ */
+}
+#beton,
+#ksi_option {
+    font-size: 1rem;
+    width: 80px;
 }
