@@ -1,4 +1,4 @@
-import {testeZahl} from './index.js';
+import {testeZahl} from './utility.js';
 import {kdtab} from "./kdtab";
 
 export function kdtabelle() {

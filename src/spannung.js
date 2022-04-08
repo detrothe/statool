@@ -1,4 +1,4 @@
-import {testeZahl} from './index.js';
+import {testeZahl} from './utility.js';
 
 export function spannungen() {
     console.log("in spannungen");

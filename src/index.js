@@ -1,9 +1,10 @@
 import './linglsystem.js';
 import './spannung.js';
 import './kdTabelle.js'
-import {kdtab} from './kdtab.js';
+//import {kdtab} from './kdtab.js';
+import {testeZahl} from "./utility.js";
 
-import DetectOS from 'detectos.js'
+import DetectOS from './detectos.js'
 import {init_contextmenu} from './contextMenu.js';
 //import {TFVector} from "./TFArray";
 
@@ -49,16 +50,6 @@ function tan_2() {
 
 window.tan_2 = tan_2;
 
-export function testeZahl(wert) {
-    wert = wert.replace(/,/g, '.');
-    //console.log('Komma entfernt',wert);
-    if (isNaN(wert)) {
-        //window.alert("Das ist keine Zahl ");
-
-        return 0;
-    }
-    return wert;
-}
 
 //-------------------------------------------------------------------------------
 
@@ -111,10 +102,11 @@ const d2d = new TFVector(1, 10);
 d2d.initV(d2d_);
 console.log("d2",d2d._(1),d2d._(2));
 */
-
+/*
 const moment = 50.0, normalkraft = 0.0, d_o = 5, d_u = 5, breite = 1.00, pldicke = 0.20, bn = 2;
 
 
 let as = kdtab(moment, normalkraft, d_o, d_u, breite, pldicke, bn,1);
 
 console.log("as",as[0],as[1],as[2]);
+*/
