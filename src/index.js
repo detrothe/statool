@@ -2,7 +2,7 @@ import './linglsystem.js';
 import './spannung.js';
 import './kdTabelle.js'
 //import {kdtab} from './kdtab.js';
-import {testeZahl} from "./utility.js";
+import {testeZahl,SDuennTruss} from "./utility.js";
 
 import DetectOS from './detectos.js'
 import {init_contextmenu} from './contextMenu.js';
@@ -26,6 +26,7 @@ export function tangens() {
     document.getElementById("spannungen").style.display = "none";
     document.getElementById("img_stress").style.display = "none";
     document.getElementById("kdTabelle").style.display = "none";
+    document.getElementById("my_dataviz").style.display = "none";
 }
 
 window.tangens = tangens;   // jetzt auch in html sichtbar
@@ -110,3 +111,9 @@ let as = kdtab(moment, normalkraft, d_o, d_u, breite, pldicke, bn,1);
 
 console.log("as",as[0],as[1],as[2]);
 */
+
+
+let stab = new SDuennTruss();
+
+stab.Iy = 10.0
+console.log("stab",stab.Iy);

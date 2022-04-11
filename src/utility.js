@@ -12,3 +12,13 @@ export function testeZahl(wert) {
     }
     return wert;
 }
+
+export function SDuennTruss () {
+    this.emodul = null
+    this.Iy = null
+}
+/*
+let stab = new mystruct();
+
+stab.Iy = 10.0
+*/

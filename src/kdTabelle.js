@@ -19,6 +19,7 @@ export function kdtabelle() {
     document.getElementById("spannungen").style.display = "none";
     document.getElementById("img_stress").style.display = "none";
     document.getElementById("kdTabelle").style.display = "block";
+    document.getElementById("my_dataviz").style.display = "none";
 
 }
 

@@ -23,6 +23,7 @@ export function gleichungssystem() {
     document.getElementById("spannungen").style.display = "none";
     document.getElementById("img_stress").style.display = "none";
     document.getElementById("kdTabelle").style.display = "none";
+    document.getElementById("my_dataviz").style.display = "none";
 
     const rsTabelle = document.getElementById("rechteSeite");
     const matrix = document.getElementById("polygonTable");
