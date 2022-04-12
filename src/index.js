@@ -2,10 +2,11 @@ import './linglsystem.js';
 import './spannung.js';
 import './kdTabelle.js'
 //import {kdtab} from './kdtab.js';
-import {testeZahl,SDuennTruss} from "./utility.js";
+import {testeZahl, SDuennTruss} from "./utility.js";
 
 import DetectOS from './detectos.js'
 import {init_contextmenu} from './contextMenu.js';
+
 //import {TFVector} from "./TFArray";
 
 export function tangens() {
@@ -45,7 +46,7 @@ function tan_2() {
         alpha = alpha * 180.0 / Math.PI;
     }
 
-    window.document.tangens_2.alpha.value = alpha;
+    document.getElementById("alpha").innerText = alpha + "°";
 
 }
 
@@ -116,4 +117,4 @@ console.log("as",as[0],as[1],as[2]);
 let stab = new SDuennTruss();
 
 stab.Iy = 10.0
-console.log("stab",stab.Iy);
+console.log("stab", stab.Iy);

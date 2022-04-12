@@ -92,8 +92,9 @@ body {
 .footer {
     grid-area: footer;
     background-color: #f1f1f1;
-    padding: 10px;
+    padding: 5px;
     text-align: center;
+    font-size: 0.7rem;
 }
 
 /* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
@@ -236,6 +237,7 @@ hr {
 td, th {
     padding: 1px 4px;
     width: 100px;
+    /*background-color: orange;*/
 }
 
 p {
@@ -277,6 +279,17 @@ input:valid {
      */
 }
 
+.zelle0 {
+    /*width: 4em;*/
+    text-align: right;
+    font-size: 1em;
+}
+
+.zelle100 {
+    /*width: 100px;*/
+    text-align: right;
+    font-size: 1em;
+}
 .zelle {
     width: 50px;
 }
@@ -366,7 +379,7 @@ td.selected {
 
 .table_tangens td {
     /*background-color: orange;*/
-    width: 150px;
+    width: 200px;
 }
 .table_sigma td {
     /*background-color: orange;*/

@@ -25,14 +25,31 @@ export function spannungen() {
 
 
 function calc_sigma() {
-    let sig_x, sig_z, tau_xz, phi_h, phi_tau, alpha, x, y;
+
+    let sig_x, sig_z, tau_xz, phi, phi_h, phi_tau, alpha, x, y;
     let sig_1, sig_2, sig_M, tau_max;
+    let co2, si2, si_2, dalpha, alphab;
 
     sig_x = Number(testeZahl(window.document.form_sigma.sigx.value));
     sig_z = Number(testeZahl(window.document.form_sigma.sigz.value));
     tau_xz = Number(testeZahl(window.document.form_sigma.tauxz.value));
+    phi = Number(testeZahl(window.document.form_sigma.phi.value));
 
-    console.log("sig", sig_x, sig_z, tau_xz);
+    console.log ("phi",phi);
+    phi = phi * Math.PI / 180.0;
+    co2 = Math.cos(phi) ** 2
+    si2 = Math.sin(phi) ** 2
+    si_2 = Math.sin(2 * phi)
+    let sigma_xi = sig_x * co2 + sig_z * si2 + tau_xz * si_2;
+    let sigma_eta = sig_z * co2 + sig_x * si2 - tau_xz * si_2;
+    let tau_xiEta = 0.5 * (sig_z - sig_x) * si_2 + tau_xz * (co2 - si2);
+
+    document.getElementById("sig_xi").innerText = sigma_xi.toFixed(2);
+    document.getElementById("sig_eta").innerText = sigma_eta.toFixed(2);
+    document.getElementById("tau_xiEta").innerText = tau_xiEta.toFixed(2);
+
+
+    //console.log("sig", sig_x, sig_z, tau_xz);
 
     y = 2 * tau_xz;
     x = sig_x - sig_z;
@@ -73,7 +90,6 @@ function calc_sigma() {
     const sig_xi = Array(73);
     const sig_eta = Array(73);
     const tau_xi_eta = Array(73);
-    let co2, si2, si_2, dalpha, alphab;
     let points = [];
     let min_sig = 1.e30, max_sig = -1e30;
 
@@ -215,13 +231,35 @@ function calc_sigma() {
             return "rotate(-90)"
         });
 
-    svg.append("text").attr("x", xx(90)).attr("y", yy(sig_xi[72])).html("σ_ξ").style("font-size", 15).style("fill", 'green').style("text-anchor", "left");
-    svg.append("text").attr("x", xx(90)).attr("y", yy(sig_eta[72])).html("σ_η").style("font-size", 15).style("fill", 'steelblue').style("text-anchor", "left");
-    svg.append("text").attr("x", xx(90)).attr("y", yy(tau_xi_eta[72])).html("τ_ξη").style("font-size", 15).style("fill", 'red').style("text-anchor", "left");
+    svg.append("text").attr("x", xx(90)).attr("y", yy(sig_xi[72])).html("σ").style("font-size", 15).style("fill", 'green').style("text-anchor", "left")
+        .append('tspan').text('ξ').style('font-size', 15).attr('dy', '.5em');
+    svg.append("text").attr("x", xx(90)).attr("y", yy(sig_eta[72])).html("σ").style("font-size", 15).style("fill", 'steelblue').style("text-anchor", "left")
+        .append('tspan').text('η').style('font-size', 15).attr('dy', '.5em');
+    svg.append("text").attr("x", xx(90)).attr("y", yy(tau_xi_eta[72])).html("τ").style("font-size", 15).style("fill", 'red').style("text-anchor", "left")
+        .append('tspan').text('ξη').style('font-size', 15).attr('dy', '.5em');
+    svg.append("text").attr("x", xx(phi_h) + 5).attr("y", yy(min_sig)).html("φ").style("font-size", 15).style("fill", 'darkorange').style("text-anchor", "left")
+        .append('tspan').text('h').style('font-size', 15).attr('dy', '.5em');
 
-    svg.append("text").attr("x", xx(phi_h)+5).attr("y", yy(min_sig)).html("φ_h").style("font-size", 15).style("fill", 'darkorange').style("text-anchor", "left");
-    svg.append("text").attr("x", xx(phi_tau)+5).attr("y", yy(min_sig)).html("φ**").style("font-size", 15).style("fill", 'darkorange').style("text-anchor", "left");
+    svg.append("text").attr("x", xx(phi_tau) + 5).attr("y", yy(min_sig)).html("φ**").style("font-size", 15).style("fill", 'darkorange').style("text-anchor", "left");
 
+    svg.append("text").attr("x", xx(phi_tau) + 3).attr("y", yy(tau_max) - 10).html("τ").style("font-size", 15).style("fill", 'red').style("text-anchor", "left")
+        .append('tspan')
+        .text('max')
+        .style('font-size', 15)
+        .attr('dy', '.5em');
+
+    svg.append("text").attr("x", xx(phi_h) + 5).attr("y", yy(sig_1) - 5).html("σ").style("font-size", 15).style("fill", 'green').style("text-anchor", "left")
+        .append('tspan')
+        .text('1')
+        .style('font-size', 15)
+        //.style("alignment-baseline", "hanging")
+        .attr('dy', '.5em');
+    svg.append("text").attr("x", xx(phi_h) + 5).attr("y", yy(sig_2)).html("σ").style("font-size", 15).style("fill", 'steelblue').style("alignment-baseline", "hanging")
+        .append('tspan')
+        .text('2')
+        .style('font-size', 15)
+        .style("alignment-baseline", "hanging")
+        .attr('dy', '.5em');
 
 }
 

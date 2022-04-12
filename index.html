@@ -106,37 +106,33 @@
                 <table class="table_tangens">
                     <tr>
                         <td COLSPAN="2">
-                            Eingabe: alpha=arctan(y/x)
+                            <p>Eingabe:<br> alpha=arctan(y/x)</p>
                         </td>
                         <td></td>
 
                     </tr>
                     <tr>
-                        <td>
-                            Gegenkathete y
-                        </td>
+                        <td class="zelle100"> Gegenkathete y =</td>
                         <td><input type="text" name="y" size="10"></td>
                         <td></td>
 
                     </tr>
                     <tr>
-                        <td>
-                            Ankathete x
-                        </td>
+                        <td class="zelle100"> Ankathete x =</td>
                         <td><input type="text" name="x" size="10"></td>
                         <td></td>
 
                     </tr>
 
                     <tr>
-                        <td> Ergebnis:</td>
+                        <td><p>Ergebnis:</p></td>
                         <td COLSPAN="2"><input type="button" value="RECHNEN" name="B1" onClick="tan_2()"></td>
                     </tr>
                     <tr>
-                        <td>
-                            alpha in Grad
+                        <td align="right">
+                            alpha =
                         </td>
-                        <td COLSPAN="2"><input type="text" name="alpha" size="10"></td>
+                        <td id="alpha"></td>
                     </tr>
                 </table>
             </form>
@@ -190,6 +186,35 @@
                         <td id="phi_tau"></td>
                     </tr>
 
+                    <tr>
+                        <td COLSPAN="4"><br>Spannungen eines um den Winkel &phi; im Uhrzeigersinn gedrehten Elementes in
+                            Grad
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            &phi; =
+                        </td>
+                        <td><input type="text" name="phi" size="10"></td>
+
+                        <td align="right">&sigma;<sub>&xi;</sub> =</td>
+                        <td id="sig_xi"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td align="right">&sigma;<sub>&eta;</sub> =</td>
+                        <td id="sig_eta"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td align="right">&tau;<sub>&xi;&eta;</sub> =</td>
+                        <td id="tau_xiEta"></td>
+                    </tr>
+
+
                 </table>
             </form>
         </div>
@@ -208,7 +233,7 @@
 
         <div id="kdTabelle">
 
-<p>Bemessung eines Rechteckquerschnitts</p>
+            <p>Bemessung eines Rechteckquerschnitts</p>
 
             <form name="form_kdTab">
                 <table>
@@ -219,7 +244,7 @@
                         </td>
                         <td>[kN]</td>
                         <td align="right">k<sub>d</sub> =</td>
-                        <td id="kd_value"></td>
+                        <td id="kd_value">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                     </tr>
                     <tr>
                         <td class="zelle0">M<sub>Ed</sub> =</td>
@@ -285,8 +310,11 @@
                             </select>
                         </td>
                         <td></td>
-                        <td><input type="button" value="RECHNEN" name="B3" onClick="calc_kdtab()"></td>
+                        <td colspan="2" align="right"><input type="button" value="RECHNEN" name="B3"
+                                                             onClick="calc_kdtab()"></td>
+
                     </tr>
+
 
                     </tbody>
                 </table>
@@ -309,6 +337,15 @@
                 <img src="src/img/stress.png" alt="Vorzeichendefinition" style="height:auto;">
                 <!-- width="612" height="530" -->
             </picture>
+            <br>
+            <picture>
+                <source media="(min-width: 700px) and (orientation:landscape)"
+                        srcset="src/img/stress_vorzeichen.png 2x, src/img/stress_vorzeichen.png 1x">
+                <source media="(min-width: 600px) and (orientation:portrait)"
+                        srcset="src/img/stress_vorzeichen.png 2x, src/img/stress_vorzeichen.png 1x">
+                <img src="src/img/stress_vorzeichen.png" alt="Vorzeichendefinition Winkel" style="height:auto;">
+                <!-- width="612" height="530" -->
+            </picture>
         </div>
 
     </div>
@@ -318,12 +355,12 @@
             <p>Lösung {U}</p>
         </div>
 
-        <div id="my_dataviz" ></div>  <!--  class="svg-container"  -->
+        <div id="my_dataviz"></div>  <!--  class="svg-container"  -->
 
     </div>
 
     <div class="footer">
-        <p>Statik Werkzeugkasten, 11-April-2022, statikverstehen.de</p>
+        <p>Statik Werkzeugkasten, 12-April-2022, statikverstehen.de</p>
     </div>
 
 
