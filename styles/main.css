@@ -335,6 +335,13 @@ input:valid {
 }
 
 
+#polygonTable td.selected,
+#rsTable td.selected {
+    background-color: darkred;
+    color: white;
+    white-space: nowrap;
+}
+
 #rsTable td {
     background-color: rgb(250, 250, 250);
     white-space: nowrap;

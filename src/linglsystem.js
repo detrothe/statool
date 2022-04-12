@@ -3,7 +3,7 @@ import * as d3 from "d3";
 //import './gauss.js';
 import {gauss} from "./gauss";
 import './dateien.js';
-import {testeZahl} from "./utility.js";
+import {testeZahl,testNumber} from "./utility.js";
 
 export function gleichungssystem() {
     console.log("in gleichungssystem");
@@ -712,13 +712,18 @@ function rechnen() {
 
     const c = Array.from(Array(nZeilen), () => new Array(nSpalten).fill(0.0));
 
+
+    $("#polygonTable td").removeClass("selected");
+    $("#rsTable td").removeClass("selected");
+
     for (i = 0; i < nZeilen; i++) {
         for (j = 0; j < nSpalten; j++) {
             wert = tabelle.rows[i + 1].cells[j + 1].innerText
             //console.log("c",i,j,Number(testeZahl(wert)));
-            c[i][j] = Number(testeZahl(wert));
+            c[i][j] = Number(testNumber(wert,i+1,j+1,'rsTable'));
         }
     }
+
 
     tabelle = document.getElementById('polygonTable');
     nZeilen = tabelle.rows.length - 1;
@@ -734,7 +739,7 @@ function rechnen() {
             for (j = 0; j < nSpalten; j++) {
                 wert = tabelle.rows[i + 1].cells[j + 1].innerText;
                 //console.log("a",i,j,Number(testeZahl(wert)));
-                a[i][j] = Number(testeZahl(wert));
+                a[i][j] = Number(testNumber(wert,i+1,j+1,'polygonTable'));
                 //console.log(i,j,a[i][j]);
             }
         }
