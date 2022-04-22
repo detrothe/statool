@@ -3,7 +3,7 @@ import * as d3 from "d3";
 //import './gauss.js';
 import {gauss} from "./gauss";
 import './dateien.js';
-import {testeZahl,testNumber} from "./utility.js";
+import {testeZahl, testNumber} from "./utility.js";
 
 export function gleichungssystem() {
     console.log("in gleichungssystem");
@@ -150,129 +150,9 @@ function tabulate(theDiv, id, data, columns) {
             //console.log("d.value", d.value);
             return d.value;
         })
-        .on('keydown', function (ev) {
-                const tableId = ev.target.offsetParent.id;
-                selectedCellPoly.tableId = tableId;
-                console.log("in KEYDOWN", ev.keyCode, tableId);
-                // trap the return and space keys being pressed
-                if (ev.keyCode === 32) {    // Leertaste
-                    ev.preventDefault();
-                } else if (ev.keyCode === 13) {    // return
-                    ev.preventDefault();
-
-                    const el = document.getElementById("input_neq");
-                    if (el) {
-                        const npkte = el.value;
-
-                        const tabelle = document.getElementById(tableId);
-                        nSpalten = tabelle.rows[0].cells.length - 1;
-                        //console.log("Taste Tab gedrückt",tabelle.rows[selectedCellPoly.row].cells[selectedCellPoly.col]);
-                        //console.log("Taste Tab gedrückt",tabelle.rows[selectedCellPoly.row].cells.item(selectedCellPoly.col));
-                        //console.log("tabelle", tabelle.classList);
-                        //tabelle.rows[selectedCellPoly.row].cells[selectedCellPoly.col].removeClass("highlight");
-                        const row = selectedCellPoly.row;
-                        const col = selectedCellPoly.col;
-                        let str = tableId + '-' + row + '-' + col;
-                        const elem = document.getElementById(str);
-                        console.log("<RETURN> ID", str, elem.id, elem.classList);
-                        elem.classList.remove('highlight');  // alle selektierte Zellen löschen
-                        for (let i = 0; i < npkte; i++) {
-                            selectedCellPoly.selColY[i] = false;
-                            selectedCellPoly.selColZ[i] = false;
-                        }
-                        //$("#polygonTable td").removeClass("highlight");
-                        if (col < nSpalten) {
-                            str = tableId + '-' + row + '-' + (col + 1);
-                        } else if (col === nSpalten) {
-                            if (row < npkte) {
-                                str = tableId + '-' + Number(row + 1) + '-1';
-                            } else {
-                                str = tableId + '-1-1';
-                            }
-                        }
-                        console.log("col,nSpalten", col, nSpalten, str)
-
-                        console.log("idTable", str);
-                        const elemNeu = document.getElementById(str);
-                        elemNeu.classList.add('highlight');
-                        elemNeu.innerText = "";
-                        elemNeu.focus();
-                        const evt = new Event("mousedown", {"bubbles": true, "cancelable": false});
-                        evt.button = 0;     // linke Maustaste
-                        elemNeu.dispatchEvent(evt);
-
-                    }
-
-                }
-            }
-        )
-        .on('mousedown', function (ev) {
-                const tableId = ev.target.offsetParent.id;
-                selectedCellPoly.tableId = tableId;
-
-                console.log("mousedown", ev.pageX, ev.pageY, ev.which, ev.button);
-                //document.getElementById("polyCanvas").style.display = "block";
-
-                if (ev.which === 3) {               // rechte Maustaste
-                    console.log("rechte Maustaste");
-                    //ev.preventDefault();
-                } else if (ev.button === 0) {      // linke Maustaste
-                    //ev.preventDefault();
-                    const row = Number($(this).parent().index()) + 1;
-                    const col = $(this).index();
-                    const tabelle = document.getElementById(tableId);
-                    if (tabelle.rows[row].cells[col].contentEditable === 'false') {
-                        const str = tableId + '-' + row + '-' + (col + 1);
-                        console.log("contentEditable === false", row, col, str);
-                        selectedCellPoly.row = row;
-                        selectedCellPoly.col = col;
-
-                        const elemNeu = document.getElementById(str);
-                        //elemNeu.classList.add('highlight');
-                        //elemNeu.innerText = "";
-                        //elemNeu.focus();
-                        const evt = new Event("keydown", {"bubbles": true, "cancelable": false});
-                        evt.keyCode = 13;     // Return-Taste
-                        elemNeu.dispatchEvent(evt);
-
-                    } else {
-
-                        if (selectedCellPoly.isSelected) {
-                            //selectedCellPoly.activatedMember.removeClass("highlight");
-                            console.log("is selected", $(this).parent());
-                            const el = document.getElementById("input_neq");
-                            if (el) {
-                                const npkte = el.value;
-                                $("#" + tableId + " td").removeClass("highlight");
-                                for (let i = 0; i < npkte; i++) {
-                                    selectedCellPoly.selColY[i] = false;
-                                    selectedCellPoly.selColZ[i] = false;
-                                }
-                            }
-
-                        }
-                        console.log("cell", $(this), $(this).parent().index());
-                        if (col >= 1) {
-                            const activatedMember = $(ev.target).closest("td");
-                            activatedMember.addClass("highlight");
-                            let wert = activatedMember.text();
-
-                            //console.log("event", row, col, wert);
-                            selectedCellPoly.row = row;
-                            selectedCellPoly.col = col;
-                            selectedCellPoly.wert = wert;
-                            selectedCellPoly.activatedMember = activatedMember;
-                            selectedCellPoly.isSelected = true;
-                            if (col === 1) selectedCellPoly.selColY[row - 1] = true;
-                            else if (col === 2) selectedCellPoly.selColZ[row - 1] = true;
-                            selectedCellPoly.startRowIndex = row;
-                            selectedCellPoly.startCellIndex = col;
-                        }
-                    }
-                }
-            }
-        )
-        .on('mousemove', MMOVE)
+        .on('keydown', KEYDOWN)
+        .on('mousedown', MOUSEDOWN)
+        .on('mousemove', MOUSEMOVE)
 
         .on("touchstart", function (ev) {
             const tableId = ev.target.offsetParent.id;
@@ -349,7 +229,7 @@ function tabulate(theDiv, id, data, columns) {
     return table;
 }
 
-export function MMOVE(ev) { // mousemove
+export function MOUSEMOVE(ev) { // mousemove
     const tableId = ev.target.offsetParent.id;
     //console.log("MMOVE mouseover", tableId, ev.buttons);  // ev.path[3].id
     selectedCellPoly.tableId = tableId;
@@ -414,6 +294,129 @@ export function MMOVE(ev) { // mousemove
                 }
             }
         }
+    }
+}
+
+export function MOUSEDOWN(ev) {
+    const tableId = ev.target.offsetParent.id;
+    selectedCellPoly.tableId = tableId;
+
+    console.log("mousedown", ev.pageX, ev.pageY, ev.which, ev.button);
+    //document.getElementById("polyCanvas").style.display = "block";
+
+    if (ev.which === 3) {               // rechte Maustaste
+        console.log("rechte Maustaste");
+        //ev.preventDefault();
+    } else if (ev.button === 0) {      // linke Maustaste
+        //ev.preventDefault();
+        const row = Number($(this).parent().index()) + 1;
+        const col = $(this).index();
+        const tabelle = document.getElementById(tableId);
+        if (tabelle.rows[row].cells[col].contentEditable === 'false') {
+            const str = tableId + '-' + row + '-' + (col + 1);
+            console.log("contentEditable === false", row, col, str);
+            selectedCellPoly.row = row;
+            selectedCellPoly.col = col;
+
+            const elemNeu = document.getElementById(str);
+            //elemNeu.classList.add('highlight');
+            //elemNeu.innerText = "";
+            //elemNeu.focus();
+            const evt = new Event("keydown", {"bubbles": true, "cancelable": false});
+            evt.keyCode = 13;     // Return-Taste
+            elemNeu.dispatchEvent(evt);
+
+        } else {
+
+            if (selectedCellPoly.isSelected) {
+                //selectedCellPoly.activatedMember.removeClass("highlight");
+                console.log("is selected", $(this).parent());
+                const el = document.getElementById("input_neq");
+                if (el) {
+                    const npkte = el.value;
+                    $("#" + tableId + " td").removeClass("highlight");
+                    for (let i = 0; i < npkte; i++) {
+                        selectedCellPoly.selColY[i] = false;
+                        selectedCellPoly.selColZ[i] = false;
+                    }
+                }
+
+            }
+            console.log("cell", $(this), $(this).parent().index());
+            if (col >= 1) {
+                const activatedMember = $(ev.target).closest("td");
+                activatedMember.addClass("highlight");
+                let wert = activatedMember.text();
+
+                //console.log("event", row, col, wert);
+                selectedCellPoly.row = row;
+                selectedCellPoly.col = col;
+                selectedCellPoly.wert = wert;
+                selectedCellPoly.activatedMember = activatedMember;
+                selectedCellPoly.isSelected = true;
+                if (col === 1) selectedCellPoly.selColY[row - 1] = true;
+                else if (col === 2) selectedCellPoly.selColZ[row - 1] = true;
+                selectedCellPoly.startRowIndex = row;
+                selectedCellPoly.startCellIndex = col;
+            }
+        }
+    }
+}
+
+
+export function KEYDOWN(ev) {
+    const tableId = ev.target.offsetParent.id;
+    selectedCellPoly.tableId = tableId;
+    console.log("in KEYDOWN", ev.keyCode, tableId);
+    // trap the return and space keys being pressed
+    if (ev.keyCode === 32) {    // Leertaste
+        ev.preventDefault();
+    } else if (ev.keyCode === 13) {    // return
+        ev.preventDefault();
+
+        const el = document.getElementById("input_neq");
+        if (el) {
+            const npkte = el.value;
+
+            const tabelle = document.getElementById(tableId);
+            nSpalten = tabelle.rows[0].cells.length - 1;
+            //console.log("Taste Tab gedrückt",tabelle.rows[selectedCellPoly.row].cells[selectedCellPoly.col]);
+            //console.log("Taste Tab gedrückt",tabelle.rows[selectedCellPoly.row].cells.item(selectedCellPoly.col));
+            //console.log("tabelle", tabelle.classList);
+            //tabelle.rows[selectedCellPoly.row].cells[selectedCellPoly.col].removeClass("highlight");
+            const row = selectedCellPoly.row;
+            const col = selectedCellPoly.col;
+            let str = tableId + '-' + row + '-' + col;
+            const elem = document.getElementById(str);
+            console.log("<RETURN> ID", str, elem.id, elem.classList);
+            elem.classList.remove('highlight');  // alle selektierte Zellen löschen
+            for (let i = 0; i < npkte; i++) {
+                selectedCellPoly.selColY[i] = false;
+                selectedCellPoly.selColZ[i] = false;
+            }
+            //$("#polygonTable td").removeClass("highlight");
+            if (col < nSpalten) {
+                str = tableId + '-' + row + '-' + (col + 1);
+            } else if (col === nSpalten) {
+                if (row < npkte) {
+                    str = tableId + '-' + Number(row + 1) + '-1';
+                } else {
+                    str = tableId + '-1-1';
+                }
+            }
+            console.log("col,nSpalten", col, nSpalten, str)
+
+            console.log("idTable", str);
+            const elemNeu = document.getElementById(str);
+            elemNeu.classList.add('highlight');
+            elemNeu.innerText = "";
+            elemNeu.focus();
+            const evt = new Event("mousedown", {"bubbles": true, "cancelable": false});
+            evt.button = 0;     // linke Maustaste
+            elemNeu.dispatchEvent(evt);
+
+        }
+
     }
 }
 
@@ -635,7 +638,9 @@ export function resize_Tabelle(idTable, nRowNew, nColNew) {
                     newCell.style.border = 'solid 1px';
                     newCell.style.padding = '5px';
                     newCell.contentEditable = 'true';
-                    newCell.addEventListener("mousemove", MMOVE);
+                    newCell.addEventListener("mousemove", MOUSEMOVE);
+                    newCell.addEventListener("mousedown", MOUSEDOWN);
+                    newCell.addEventListener("keydown", KEYDOWN);
                     newCell.id = str;
                     newCell.wrap = false;
 
@@ -678,7 +683,9 @@ export function resize_Tabelle(idTable, nRowNew, nColNew) {
                 } else if (j <= nRowNew) {
                     //newCell.style.backgroundColor = "#FFFFFF";
                     newCell.contentEditable = 'true';
-                    newCell.addEventListener("mousemove", MMOVE);
+                    newCell.addEventListener("mousemove", MOUSEMOVE);
+                    newCell.addEventListener("mousedown", MOUSEDOWN);
+                    newCell.addEventListener("keydown", KEYDOWN);
                     newCell.wrap = false;
                 }
             }
@@ -720,7 +727,7 @@ function rechnen() {
         for (j = 0; j < nSpalten; j++) {
             wert = tabelle.rows[i + 1].cells[j + 1].innerText
             //console.log("c",i,j,Number(testeZahl(wert)));
-            c[i][j] = Number(testNumber(wert,i+1,j+1,'rsTable'));
+            c[i][j] = Number(testNumber(wert, i + 1, j + 1, 'rsTable'));
         }
     }
 
@@ -739,7 +746,7 @@ function rechnen() {
             for (j = 0; j < nSpalten; j++) {
                 wert = tabelle.rows[i + 1].cells[j + 1].innerText;
                 //console.log("a",i,j,Number(testeZahl(wert)));
-                a[i][j] = Number(testNumber(wert,i+1,j+1,'polygonTable'));
+                a[i][j] = Number(testNumber(wert, i + 1, j + 1, 'polygonTable'));
                 //console.log(i,j,a[i][j]);
             }
         }
