@@ -75,6 +75,7 @@ function calc_wind() {
 
     const hd = h / d;
     const e = Math.min(2 * h, b)
+
     if (h <= 10.0) {
         qp = q_p[windzone - 1][0]
     } else if (h <= 18.0 && windzone < 8) {
@@ -202,6 +203,7 @@ function calc_wind() {
         tag.setAttribute("id", "id_wind_sog");
         let text = document.createTextNode("Sogwerte");
         tag.appendChild(text); // <p>TEST TEXT</p>
+        tag.innerHTML = "Sogwerte für &theta; = 0°"
         myTableDiv.appendChild(tag);
 
         table = document.createElement("TABLE");   //TABLE??
@@ -287,6 +289,7 @@ function calc_wind() {
         tag.setAttribute("id", "id_wind_druck");
         let text = document.createTextNode("Druckwerte");
         tag.appendChild(text);
+        tag.innerHTML = "Druckwerte für &theta; = 0°"
         myTableDiv.appendChild(tag);
 
         table = document.createElement("TABLE");   //TABLE??
