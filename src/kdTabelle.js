@@ -1,8 +1,10 @@
-import {testeZahl} from './utility.js';
+import {testeZahl, sichtbar} from './utility.js';
 import {kdtab} from "./kdtab";
 
 export function kdtabelle() {
     console.log("in kdTabelle");
+    sichtbar( 'kdtabelle')
+    /*
     const tab1 = document.getElementById("tangens");
     tab1.style.display = "none";
     const tab = document.getElementById("gleichungssystem");
@@ -20,7 +22,7 @@ export function kdtabelle() {
     document.getElementById("img_stress").style.display = "none";
     document.getElementById("kdTabelle").style.display = "block";
     document.getElementById("my_dataviz").style.display = "none";
-
+*/
 }
 
 function calc_kdtab() {

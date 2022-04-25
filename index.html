@@ -35,7 +35,8 @@
                 <a href="javascript:gleichungssystem();">Gleichungssystem</a>
                 <!-- <a href="donjuan.html">Juan</a> -->
                 <a href="javascript:spannungen();">Spannungen</a>
-                <a href="javascript:kdtabelle();">kd Bemess</a>
+                <a href="javascript:kdtabelle();">Bemessung</a>
+                <a href="javascript:lasten();">Lasten</a>
                 <!-- <a href="javascript:void(0);" class="info" onclick="tangens()">
                 «Links on/off»
                 </a> -->
@@ -146,43 +147,43 @@
                 <table class="table_sigma">
                     <tr>
                         <td align="right">
-                            &sigma;<sub>x</sub> =
+                            &sigma;<sub>x</sub>&nbsp;=
                         </td>
                         <td><input type="text" name="sigx" size="10" pattern="[0-9.,eE+-]*"></td>
 
-                        <td align="right">&sigma;<sub>1</sub> =</td>
+                        <td align="right">&sigma;<sub>1</sub>&nbsp;=</td>
                         <td id="sigma_1"></td>
                     </tr>
                     <tr>
                         <td align="right">
-                            &sigma;<sub>z</sub> =
+                            &sigma;<sub>z</sub>&nbsp;=
                         </td>
                         <td><input type="text" name="sigz" size="10" pattern="[0-9.,eE+-]*"></td>
 
-                        <td align="right">&sigma;<sub>2</sub> =</td>
+                        <td align="right">&sigma;<sub>2</sub>&nbsp;=</td>
                         <td id="sigma_2"></td>
                     </tr>
                     <tr>
                         <td align="right">
-                            &tau;<sub>xz</sub> =
+                            &tau;<sub>xz</sub>&nbsp;=
                         </td>
                         <td><input type="text" name="tauxz" size="10" pattern="[0-9.,eE+-]*"></td>
 
-                        <td align="right">&phi;<sub>H</sub> =</td>
+                        <td align="right">&phi;<sub>H</sub>&nbsp;=</td>
                         <td id="phi_h"></td>
                     </tr>
                     <tr>
                         <td></td>
                         <td></td>
 
-                        <td align="right">&tau;<sub>max</sub> =</td>
+                        <td align="right">&tau;<sub>max</sub>&nbsp;=</td>
                         <td id="tau_max"></td>
                     </tr>
                     <tr>
                         <td></td>
                         <td><input type="button" value="RECHNEN" name="B1" onClick="calc_sigma()"></td>
 
-                        <td align="right">&phi;<sup>**</sup> =</td>
+                        <td align="right">&phi;<sup>**</sup>&nbsp;=</td>
                         <td id="phi_tau"></td>
                     </tr>
 
@@ -198,19 +199,19 @@
                         </td>
                         <td><input type="text" name="phi" size="10" pattern="[0-9.,eE+-]*"></td>
 
-                        <td align="right">&sigma;<sub>&xi;</sub> =</td>
+                        <td align="right">&sigma;<sub>&xi;</sub>&nbsp;=</td>
                         <td id="sig_xi"></td>
                     </tr>
                     <tr>
                         <td></td>
                         <td></td>
-                        <td align="right">&sigma;<sub>&eta;</sub> =</td>
+                        <td align="right">&sigma;<sub>&eta;</sub>&nbsp;=</td>
                         <td id="sig_eta"></td>
                     </tr>
                     <tr>
                         <td></td>
                         <td></td>
-                        <td align="right">&tau;<sub>&xi;&eta;</sub> =</td>
+                        <td align="right">&tau;<sub>&xi;&eta;</sub>&nbsp;=</td>
                         <td id="tau_xiEta"></td>
                     </tr>
 
@@ -233,7 +234,7 @@
 
         <div id="kdTabelle">
 
-            <p>Bemessung eines Rechteckquerschnitts</p>
+            <p>Biegebemessung eines Rechteckquerschnitts</p>
 
             <form name="form_kdTab">
                 <table>
@@ -321,6 +322,85 @@
             </form>
         </div>
 
+        <div id="lasten">
+            <p>Windlasten nach dem vereinfachten Verfahren</p>
+
+            <form name="form_windlasten">
+                <table>
+                    <tbody>
+                    <tr>
+                        <td class="zelle0">Gebäudehöhe&nbsp;h&nbsp;=</td>
+                        <td><input type="text" id="wind_h" name="wind_h" class="input_wind" pattern="[0-9.,eE+-]*"
+                                   value="10">
+                        </td>
+                        <td>[m]</td>
+                        <td align="right">q<sub>p</sub>&nbsp;=</td>
+                        <td id="qp_value">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+
+                    </tr>
+                    <tr>
+                        <td class="zelle0">Gebäudebreite&nbsp;b&nbsp;=</td>
+                        <td><input type="text" id="wind_b" name="wind_b" class="input_wind" pattern="[0-9.,eE+-]*"
+                                   value="10">
+                        </td>
+                        <td>[m]</td>
+                        <td align="right">h/d&nbsp;=</td>
+                        <td id="hd_value">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td class="zelle0">Gebäudetiefe&nbsp;d&nbsp;=</td>
+                        <td><input type="text" id="wind_d" name="wind_d" class="input_wind" pattern="[0-9.,eE+-]*"
+                                   value="5">
+                        </td>
+                        <td>[m]</td>
+                        <td align="right">e&nbsp;=</td>
+                        <td id="e_value">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+
+                    </tr>
+                    <tr>
+                        <td class="zelle0">Lasteinzugsfläche&nbsp;A&nbsp;=</td>
+                        <td><input type="text" id="wind_A" name="wind_A" class="input_wind" pattern="[0-9.,eE+-]*"
+                                   value="10">
+                        </td>
+                        <td>[m²]</td>
+                        <td align="right"></td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td class="zelle0">Dachneigung&nbsp;&alpha;&nbsp;=</td>
+                        <td><input type="text" id="wind_alpha" name="wind_alpha" class="input_wind" pattern="[0-9.,eE+-]*"
+                                   value="0">
+                        </td>
+                        <td>[°]</td>
+                        <td align="right"></td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td class="zelle0">Windzone =</td>
+                        <td colspan="2">
+                            <select name="windzone" id="windzone">
+                                <option value="1" selected>1 Binnenland</option>
+                                <option value="2">2 Binnenland</option>
+                                <option value="3">2 Küste und Inseln Ostsee</option>
+                                <option value="4">3 Binnenland</option>
+                                <option value="5">3 Küste und Inseln Ostsee</option>
+                                <option value="6">4 Binnenland</option>
+                                <option value="7">4 Küste und Inseln Nord-/Ostsee</option>
+                                <option value="8">4 Inseln der Nordsee</option>
+                            </select>
+                        </td>
+                        <td colspan="2" align="right"><input type="button" value="RECHNEN" name="B4"
+                                                             onClick="calc_wind()"></td>
+
+                    </tr>
+
+
+                    </tbody>
+                </table>
+            </form>
+
+        </div>
+
     </div>
 
 
@@ -348,7 +428,11 @@
             </picture>
         </div>
 
+        <div id="wind_vertikal">Außendruckbeiwerte für vertikale Wände <p>&nbsp;</p></div>
+
     </div>
+
+
     <div class="right" style="background-color:#ccc;">
 
         <div id="Loesungsvektor">
@@ -357,10 +441,11 @@
 
         <div id="my_dataviz"></div>  <!--  class="svg-container"  -->
 
+        <div id="wind_satteldach">Außendruckbeiwerte für Sattel- und Trogdächer</div>
     </div>
 
     <div class="footer">
-        <p>Statik Werkzeugkasten, 22-April-2022, statikverstehen.de</p>
+        <p>Statik Werkzeugkasten, 25-April-2022, statikverstehen.de</p>
     </div>
 
 

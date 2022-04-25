@@ -1,8 +1,10 @@
 import './linglsystem.js';
 import './spannung.js';
 import './kdTabelle.js'
+import './Lasten'
+
 //import {kdtab} from './kdtab.js';
-import {testeZahl, SDuennTruss} from "./utility.js";
+import {testeZahl, SDuennTruss, sichtbar} from "./utility.js";
 
 import DetectOS from './detectos.js'
 import {init_contextmenu} from './contextMenu.js';
@@ -11,6 +13,8 @@ import {init_contextmenu} from './contextMenu.js';
 
 export function tangens() {
     console.log("in tangens");
+    sichtbar('tangens')
+    /*
     const tab1 = document.getElementById("gleichungssystem");
     tab1.style.display = "none";
     const tab = document.getElementById("tangens");
@@ -28,6 +32,8 @@ export function tangens() {
     document.getElementById("img_stress").style.display = "none";
     document.getElementById("kdTabelle").style.display = "none";
     document.getElementById("my_dataviz").style.display = "none";
+
+     */
 }
 
 window.tangens = tangens;   // jetzt auch in html sichtbar

@@ -3,10 +3,12 @@ import * as d3 from "d3";
 //import './gauss.js';
 import {gauss} from "./gauss";
 import './dateien.js';
-import {testeZahl, testNumber} from "./utility.js";
+import {testeZahl, testNumber, sichtbar} from "./utility.js";
 
 export function gleichungssystem() {
     console.log("in gleichungssystem");
+    sichtbar('gleichungssystem')
+    /*
     const tab1 = document.getElementById("tangens");
     tab1.style.display = "none";
     const tab = document.getElementById("gleichungssystem");
@@ -24,7 +26,7 @@ export function gleichungssystem() {
     document.getElementById("img_stress").style.display = "none";
     document.getElementById("kdTabelle").style.display = "none";
     document.getElementById("my_dataviz").style.display = "none";
-
+*/
     const rsTabelle = document.getElementById("rechteSeite");
     const matrix = document.getElementById("polygonTable");
     console.log("top", matrix.getBoundingClientRect().top, window.scrollY);

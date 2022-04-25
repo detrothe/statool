@@ -1,8 +1,10 @@
-import {testeZahl} from './utility.js';
+import {testeZahl, sichtbar} from './utility.js';
 import * as d3 from "d3";
 
 export function spannungen() {
     console.log("in spannungen");
+    sichtbar('spannungen')
+    /*
     const tab1 = document.getElementById("tangens");
     tab1.style.display = "none";
     const tab = document.getElementById("gleichungssystem");
@@ -20,7 +22,7 @@ export function spannungen() {
     document.getElementById("img_stress").style.display = "block";
     document.getElementById("kdTabelle").style.display = "none";
     document.getElementById("my_dataviz").style.display = "block";
-
+*/
 }
 
 
@@ -35,7 +37,7 @@ function calc_sigma() {
     tau_xz = Number(testeZahl(window.document.form_sigma.tauxz.value));
     phi = Number(testeZahl(window.document.form_sigma.phi.value));
 
-    console.log ("phi",phi);
+    console.log("phi", phi);
     phi = phi * Math.PI / 180.0;
     co2 = Math.cos(phi) ** 2
     si2 = Math.sin(phi) ** 2

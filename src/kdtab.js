@@ -196,7 +196,7 @@ export function kdtab(moment, normalkraft, d_o, d_u, breite, hoehe, bn, ksi_opti
         kd = 0.0
         as1 = 0.0
         as2 = 0.0
-        return [as1, as2, error, kd];
+        return [as1, as2, error, kd, 0.0, 0.0, 0.0];
     }
     console.log("kd=", kd)
 
@@ -272,6 +272,7 @@ export function kdtab(moment, normalkraft, d_o, d_u, breite, hoehe, bn, ksi_opti
                 console.log('Verhältnis d2/d nicht zulässig :', d2_d);
                 as1 = -9999.
                 as2 = -9999.
+                error = 2
                 return [as1, as2, error, kd];
             }
         }
@@ -325,6 +326,7 @@ export function kdtab(moment, normalkraft, d_o, d_u, breite, hoehe, bn, ksi_opti
                 console.log('Verhältnis d2/d nicht zulässig :', d2_d);
                 as1 = -9999.
                 as2 = -9999.
+                error = 1
                 return [as1, as2, error, kd];
             }
         }
@@ -378,6 +380,7 @@ export function kdtab(moment, normalkraft, d_o, d_u, breite, hoehe, bn, ksi_opti
                 console.log('Verhältnis d2/d nicht zulässig :', d2_d);
                 as1 = -9999.
                 as2 = -9999.
+                error = 2
                 return [as1, as2, error, kd];
             }
         }
