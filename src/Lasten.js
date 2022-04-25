@@ -18,6 +18,7 @@ function calc_wind() {
     let cpeA = Array(5);
     let cpeSog = Array(10);
     let cpeDruck = Array(10);
+    let cpeSog90 = Array(11);
 
     const bereich = ["A", "B", "C", "D", "E"]
     const bereich_dach = ["F", "G", "H", "I", "J"]
@@ -63,6 +64,21 @@ function calc_wind() {
         [+0.8, +0.8, +0.8, +0.8, +0.8, +0.8, -0.2, -0.2, -0.3, -0.3]   // 75°
     ]
     const alpha_druck = [-5.0, 0.0, 5.0, 15.0, 30.0, 45.0, 60.0, 75.0]
+
+    const c_pSog90 = [
+        [-1.4, -2.0, -1.2, -2.0, -1.0, -1.3, -0.9, -1.2],  // -45°
+        [-1.5, -2.1, -1.2, -2.0, -1.0, -1.3, -0.9, -1.2],  // -30°
+        [-1.9, -2.5, -1.2, -2.0, -0.8, -1.2, -0.8, -1.2],  // -15°
+        [-1.8, -2.5, -1.2, -2.0, -0.7, -1.2, -0.6, -1.2],  // -5°
+        [-1.8, -2.5, -1.2, -2.0, -0.7, -1.2, -0.6, -0.6],  // 0°
+        [-1.6, -2.2, -1.3, -2.0, -0.7, -1.2, -0.6, -0.6],  // 5°
+        [-1.3, -2.0, -1.3, -2.0, -0.6, -1.2, -0.5, -0.5],  // 15°
+        [-1.1, -1.5, -1.4, -2.0, -0.8, -1.2, -0.5, -0.5],  // 30°
+        [-1.1, -1.5, -1.4, -2.0, -0.9, -1.2, -0.5, -0.5],  // 45°
+        [-1.1, -1.5, -1.2, -2.0, -0.8, -1.0, -0.5, -0.5],  // 60°
+        [-1.1, -1.5, -1.2, -2.0, -0.8, -1.0, -0.5, -0.5],  // 75°
+    ]
+    const alpha_sog90 = [-45.0, -30.0, -15.0, -5.0, 0.0, 5.0, 15.0, 30.0, 45.0, 60.0, 75.0]
 
     console.log("qp", q_p[1][2])
 
@@ -113,16 +129,21 @@ function calc_wind() {
     console.log("D-10", cpe[6], " D-1", cpe[7])
     console.log("E-10", cpe[8], " E-1", cpe[9])
 
+    // Altes löschen
 
     let elem = document.getElementById('id_wind_vertikal');
     if (elem !== null) elem.parentNode.removeChild(elem);
     elem = document.getElementById('id_wind_satteldach_sog');
+    if (elem !== null) elem.parentNode.removeChild(elem);
+    elem = document.getElementById('id_wind_satteldach_sog90');
     if (elem !== null) elem.parentNode.removeChild(elem);
     elem = document.getElementById('id_wind_satteldach_druck');
     if (elem !== null) elem.parentNode.removeChild(elem);
     elem = document.getElementById('id_wind_sog');
     if (elem !== null) elem.parentNode.removeChild(elem);
     elem = document.getElementById('id_wind_druck');
+    if (elem !== null) elem.parentNode.removeChild(elem);
+    elem = document.getElementById('id_wind_sog90');
     if (elem !== null) elem.parentNode.removeChild(elem);
 
 
@@ -178,7 +199,6 @@ function calc_wind() {
 
         j += 2
     }
-
 
 
     // Fall Sog
@@ -268,7 +288,7 @@ function calc_wind() {
 
     // Fall Druck
 
-     index = -1
+    index = -1
     for (i = 0; i < alpha_druck.length; i++) {
         if (alpha_druck[i] > alpha) {
             index = i
@@ -350,5 +370,92 @@ function calc_wind() {
         }
 
     }
+
+
+    // Fall Sog 90°
+
+    index = -1
+    for (i = 0; i < alpha_sog90.length; i++) {
+        if (alpha_sog90[i] > alpha) {
+            index = i
+            break
+        }
+    }
+    if (alpha === alpha_sog90[alpha_sog90.length - 1]) index = alpha_sog90.length - 1;
+
+    console.log("index Sog90", index)
+
+
+    if (index > 0) {
+
+        myTableDiv = document.getElementById("wind_satteldach");  //in div
+
+
+        let tag = document.createElement("p"); // <p></p>
+        tag.setAttribute("id", "id_wind_sog90");
+        let text = document.createTextNode("Sogwerte");
+        tag.appendChild(text);
+        tag.innerHTML = "Sogwerte für &theta; = 90°"
+        myTableDiv.appendChild(tag);
+
+        table = document.createElement("TABLE");   //TABLE??
+        table.setAttribute("id", "id_wind_satteldach_sog90");
+        table.border = '0';
+        myTableDiv.appendChild(table);  //appendChild() insert it in the document (table --> myTableDiv)
+
+
+        header = table.createTHead();
+
+        th0 = table.tHead.appendChild(document.createElement("th"));
+        th0.innerHTML = "Bereich";
+        th1 = table.tHead.appendChild(document.createElement("th"));
+        th1.innerHTML = "c<sub>pe,10</sub>";
+        th2 = table.tHead.appendChild(document.createElement("th"));
+        th2.innerHTML = "c<sub>pe,1</sub>";
+        th3 = table.tHead.appendChild(document.createElement("th"));
+        th3.innerHTML = "c<sub>pe</sub>";
+
+        dalpha = alpha_sog90[index] - alpha_sog90[index - 1]
+        for (i = 0; i < 11; i++) {
+            cpeSog90[i] = (c_pSog90[index][i] - c_pSog90[index - 1][i]) / dalpha * (alpha - alpha_sog90[index - 1]) + c_pSog90[index - 1][i]
+            console.log("cpeSog90", i, dalpha, cpeSog90[i])
+        }
+
+
+        j = 0;
+        for (i = 0; i < 4; i++) {
+
+            if (A <= 1.0) {
+                cpeA[i] = cpeSog90[j + 1]
+            } else if (A < 10.0) {
+                cpeA[i] = cpeSog90[j + 1] - (cpeSog90[j + 1] - cpeSog90[j]) * Math.log10(A)
+            } else {
+                cpeA[i] = cpeSog90[j]
+            }
+
+            let newRow = table.insertRow(-1);
+
+            newCell = newRow.insertCell(0);  // Insert a cell in the row at index 0
+
+            newText = document.createTextNode(bereich_dach[i]);  // Append a text node to the cell
+            newCell.appendChild(newText);
+
+            newCell = newRow.insertCell(1);  // Insert a cell in the row at index 1
+            newText = document.createTextNode(cpeSog90[j].toFixed(2));  // Append a text node to the cell
+            newCell.appendChild(newText);
+
+            newCell = newRow.insertCell(2);  // Insert a cell in the row at index 1
+            newText = document.createTextNode(cpeSog90[j + 1].toFixed(2));  // Append a text node to the cell
+            newCell.appendChild(newText);
+
+            newCell = newRow.insertCell(3);  // Insert a cell in the row at index 1
+            newText = document.createTextNode(cpeA[i].toFixed(2));  // Append a text node to the cell
+            newCell.appendChild(newText);
+
+            j += 2
+        }
+
+    }
+
 }
 
