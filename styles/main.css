@@ -420,9 +420,10 @@ td.selected {
     font-size: 1rem;
     width: 80px;
 }
-#windzone {
+#windzone,
+#dachform {
     font-size: 1rem;
-    width: 150px;
+    width: 170px;
 }
 
 #my_dataviz {
