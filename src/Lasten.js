@@ -518,7 +518,7 @@ function calc_wind() {
 
         // Fall Sog theta = 0°
 
-        index = -1
+        let index = -1
         for (i = 0; i < alpha_pultSog.length; i++) {
             if (alpha_pultSog[i] > alpha) {
                 index = i
