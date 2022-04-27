@@ -2,7 +2,6 @@
   "background_color": "purple",
   "description": "Der Werkzeugkasten für die Statiker",
   "display": "fullscreen",
-  "start_url": ".",
   "icons": [
     {
       "src": "icon/statool.png",
@@ -12,5 +11,5 @@
   ],
   "name": "Statik Werkzeugkasten",
   "short_name": "statool",
-  "start_url": "index.html"
+  "start_url": "/?utm_source=homescreen"
 }
