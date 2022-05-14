@@ -271,21 +271,21 @@
                         <td id="ks2_value"></td>
                     </tr>
                     <tr>
-                        <td class="zelle0">d<sub>2</sub> (oben) =</td>
+                        <td class="zelle0">d<sub>2</sub>&nbsp;(oben)&nbsp;=</td>
                         <td><input type="text" id="d2" name="d2" class="input_kdtab" pattern="[0-9.,eE+-]*"></td>
                         <td>[cm]</td>
-                        <td align="right">A<sub>s2</sub> =</td>
-                        <td id="As2_value"></td>
+                        <td align="right" title="Druckzonenhöhe">x =</td>
+                        <td id="xx_value"></td>
                     </tr>
                     <tr>
-                        <td class="zelle0">d<sub>1</sub> (unten) =</td>
+                        <td class="zelle0">d<sub>1</sub>&nbsp;(unten)&nbsp;=</td>
                         <td><input type="text" id="d1" name="d1" class="input_kdtab" pattern="[0-9.,eE+-]*"></td>
                         <td>[cm]</td>
-                        <td align="right">A<sub>s1</sub> =</td>
-                        <td id="As1_value"></td>
+                        <td align="right" title="Hebelarm der inneren Kräfte">z =</td>
+                        <td id="zz_value"></td>
                     </tr>
                     <tr>
-                        <td class="zelle0">Beton C =</td>
+                        <td class="zelle0">Beton&nbsp;C&nbsp;=</td>
                         <td>
                             <select name="beton" id="beton">
                                 <option value="1">12/15</option>
@@ -300,10 +300,12 @@
                             </select>
                         </td>
                         <td></td>
-                        <td></td>
+                        <td align="right" title="obere Bewehrung">A<sub>s2</sub> =</td>
+                        <td id="As2_value"></td>
+
                     </tr>
                     <tr>
-                        <td class="zelle0">&xi; =</td>
+                        <td class="zelle0" title="bezogene Druckzonenhöhe für Druckbewehrung">&xi; =</td>
                         <td>
                             <select name="ksi" id="ksi_option">
                                 <option value="0">0,25</option>
@@ -311,6 +313,15 @@
                                 <option value="2" selected>0,617</option>
                             </select>
                         </td>
+                        <td></td>
+                        <td align="right" title="untere Bewehrung">A<sub>s1</sub> =</td>
+                        <td id="As1_value"></td>
+
+                    </tr>
+                    <tr>
+                        <td class="zelle0"></td>
+
+
                         <td></td>
                         <td colspan="2" align="right"><input type="button" value="RECHNEN" name="B3"
                                                              onClick="calc_kdtab()"></td>
@@ -369,7 +380,8 @@
                     </tr>
                     <tr>
                         <td class="zelle0">Dachneigung&nbsp;&alpha;&nbsp;=</td>
-                        <td><input type="text" id="wind_alpha" name="wind_alpha" class="input_wind" pattern="[0-9.,eE+-]*"
+                        <td><input type="text" id="wind_alpha" name="wind_alpha" class="input_wind"
+                                   pattern="[0-9.,eE+-]*"
                                    value="0">
                         </td>
                         <td>[°]</td>
@@ -438,7 +450,8 @@
             </picture>
         </div>
 
-        <div id="wind_vertikal"><b>Außendruckbeiwerte für vertikale Wände</b> <p>&nbsp;</p></div>
+        <div id="wind_vertikal"><b>Außendruckbeiwerte für vertikale Wände</b>
+            <p>&nbsp;</p></div>
 
     </div>
 
@@ -455,7 +468,7 @@
     </div>
 
     <div class="footer">
-        <p>Statik Werkzeugkasten, 271-April-2022, statikverstehen.de</p>
+        <p>Statik Werkzeugkasten, 14-Mai-2022, statikverstehen.de</p>
     </div>
 
 

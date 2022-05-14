@@ -150,6 +150,8 @@ export function kdtab(moment, normalkraft, d_o, d_u, breite, hoehe, bn, ksi_opti
     ks = 0.0;
     ks1 = 0.0;
     ks2 = 0.0;
+    xx = 0.0;
+    zz = 0.0;
 
     d2d.initV(d2d_);
     ks1tab.initV(ks1tab_);
@@ -196,6 +198,7 @@ export function kdtab(moment, normalkraft, d_o, d_u, breite, hoehe, bn, ksi_opti
         kd = 0.0
         as1 = 0.0
         as2 = 0.0
+        error = 1
         return [as1, as2, error, kd, 0.0, 0.0, 0.0];
     }
     console.log("kd=", kd)
@@ -218,6 +221,7 @@ export function kdtab(moment, normalkraft, d_o, d_u, breite, hoehe, bn, ksi_opti
         zz = ks0._(MAXZ0, 3) * d
         as2 = 0.0
         as1 = msds / d * ks + normalkraft / sigma
+        console.log("xx",xx,ks0._(MAXZ0, 2),MAXZ0)
     } else if (kd >= tab0._(iMin, bn)) {
         i = iMin + 1
         while (kd > tab0._(i, bn)) {
@@ -244,6 +248,8 @@ export function kdtab(moment, normalkraft, d_o, d_u, breite, hoehe, bn, ksi_opti
         zz = kz * d
 
     } else if (kd >= tab1._(1, bn) && ksi_option === 1) {    // 0,45
+
+        xx = 0.45 * d
 
         //       write (iout,*) 'mit Druckbewehrung'
         i = 2
@@ -277,12 +283,14 @@ export function kdtab(moment, normalkraft, d_o, d_u, breite, hoehe, bn, ksi_opti
             }
         }
         console.log("Fall 4", i);
+        if (i === 1) {
+            rho2 = 1.0
+        } else {
+            dy = rho2tab._(i) - rho2tab._(i - 1)
+            dx = d2d._(i) - d2d._(i - 1)
 
-        dy = rho2tab._(i) - rho2tab._(i - 1)
-        dx = d2d._(i) - d2d._(i - 1)
-
-        rho2 = dy / dx * (d2_d - d2d._(i - 1)) + rho2tab._(i - 1)
-
+            rho2 = dy / dx * (d2_d - d2d._(i - 1)) + rho2tab._(i - 1)
+        }
         //rho2 = rho2tab._(i)
         rho1 = rho1tab._(i, MAXKSGR)
         for (j = 1; j <= MAXKSGR; j++) {
@@ -298,6 +306,8 @@ export function kdtab(moment, normalkraft, d_o, d_u, breite, hoehe, bn, ksi_opti
         console.log("d2/d,rho1,rh2", d2_d, rho1, rho2);
 
     } else if (kd >= tab1_0617._(1, bn) && ksi_option === 2) {           // 0,617
+
+        xx = 0.617 * d
 
         //       write (iout,*) 'mit Druckbewehrung'
         i = 2
@@ -331,12 +341,14 @@ export function kdtab(moment, normalkraft, d_o, d_u, breite, hoehe, bn, ksi_opti
             }
         }
         console.log("Fall 6", i);
+        if (i === 1) {
+            rho2 = 1.0
+        } else {
+            dy = rho2tab_0617._(i) - rho2tab_0617._(i - 1)
+            dx = d2d._(i) - d2d._(i - 1)
 
-        dy = rho2tab_0617._(i) - rho2tab_0617._(i - 1)
-        dx = d2d._(i) - d2d._(i - 1)
-
-        rho2 = dy / dx * (d2_d - d2d._(i - 1)) + rho2tab_0617._(i - 1)
-
+            rho2 = dy / dx * (d2_d - d2d._(i - 1)) + rho2tab_0617._(i - 1)
+        }
         //rho2 = rho2tab_0617._(i)
         rho1 = rho1tab_0617._(i, MAXKSGR)
         for (j = 1; j <= MAXKSGR; j++) {
@@ -352,6 +364,8 @@ export function kdtab(moment, normalkraft, d_o, d_u, breite, hoehe, bn, ksi_opti
         console.log("d2/d,rho1,rh2", d2_d, rho1, rho2);
 
     } else if (kd >= tab1_025._(1, bn) && ksi_option === 0) {           // 0,25
+
+        xx = 0.25 * d
 
         //       write (iout,*) 'mit Druckbewehrung'
         i = 2
@@ -385,12 +399,14 @@ export function kdtab(moment, normalkraft, d_o, d_u, breite, hoehe, bn, ksi_opti
             }
         }
         console.log("Fall 8", i);
+        if (i === 1) {
+            rho2 = 1.0
+        } else {
+            dy = rho2tab_025._(i) - rho2tab_025._(i - 1)
+            dx = d2d_025._(i) - d2d_025._(i - 1)
 
-        dy = rho2tab_025._(i) - rho2tab_025._(i - 1)
-        dx = d2d_025._(i) - d2d_025._(i - 1)
-
-        rho2 = dy / dx * (d2_d - d2d_025._(i - 1)) + rho2tab_025._(i - 1)
-
+            rho2 = dy / dx * (d2_d - d2d_025._(i - 1)) + rho2tab_025._(i - 1)
+        }
         //rho2 = rho2tab_025._(i)
         rho1 = rho1tab_025._(i, MAXKSGR)
         for (j = 1; j <= MAXKSGR; j++) {
@@ -419,5 +435,5 @@ export function kdtab(moment, normalkraft, d_o, d_u, breite, hoehe, bn, ksi_opti
     }
 
     console.log("as", as1, as2);
-    return [as1, as2, error, kd, ks, ks1, ks2];
+    return [as1, as2, error, kd, ks, ks1, ks2, xx, zz];
 }

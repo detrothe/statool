@@ -3,7 +3,7 @@ import {kdtab} from "./kdtab";
 
 export function kdtabelle() {
     console.log("in kdTabelle");
-    sichtbar( 'kdtabelle')
+    sichtbar('kdtabelle')
     /*
     const tab1 = document.getElementById("tangens");
     tab1.style.display = "none";
@@ -27,7 +27,7 @@ export function kdtabelle() {
 
 function calc_kdtab() {
 
-let MEd, NEd, breite, hoehe, d1, d2, beton, ksi;
+    let MEd, NEd, breite, hoehe, d1, d2, beton, ksi;
 
     NEd = Number(testeZahl(window.document.form_kdTab.NEd.value));
     MEd = Number(testeZahl(window.document.form_kdTab.MEd.value));
@@ -40,14 +40,23 @@ let MEd, NEd, breite, hoehe, d1, d2, beton, ksi;
 
     let as = kdtab(MEd, NEd, d2, d1, breite, hoehe, beton, ksi);
 
-    document.getElementById("kd_value").innerText = as[3].toFixed(2) ;
-    document.getElementById("As1_value").innerText = as[0].toFixed(2) + ' cm²';
-    document.getElementById("As2_value").innerText = as[1].toFixed(2) + ' cm²';
-    if ( as[2] === 0 ) {
-        document.getElementById("ks_value").innerText = as[4].toFixed(2);
-        document.getElementById("ks1_value").innerText = as[5].toFixed(2);
-        document.getElementById("ks2_value").innerText = as[6].toFixed(2);
-
+    document.getElementById("kd_value").innerText = as[3].toFixed(2);
+    if (as[2] === 0) {
+        if (as[1] === 0.0) {                             // ohne Druckbewehrung
+            document.getElementById("ks_value").innerText = as[4].toFixed(2);
+            document.getElementById("xx_value").innerText = as[7].toFixed(2) + ' cm';
+            document.getElementById("zz_value").innerText = as[8].toFixed(2) + ' cm';
+            document.getElementById("As1_value").innerText = as[0].toFixed(2) + ' cm²';
+            document.getElementById("As2_value").innerText = "";
+        } else {
+            document.getElementById("ks_value").innerText = "";
+            document.getElementById("ks1_value").innerText = as[5].toFixed(2);
+            document.getElementById("ks2_value").innerText = as[6].toFixed(2);
+            document.getElementById("As1_value").innerText = as[0].toFixed(2) + ' cm²';
+            document.getElementById("As2_value").innerText = as[1].toFixed(2) + ' cm²';
+            document.getElementById("xx_value").innerText = as[7].toFixed(2) + ' cm';
+            document.getElementById("zz_value").innerText = "";
+        }
     }
 
 }
