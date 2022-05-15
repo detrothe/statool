@@ -225,6 +225,8 @@ export function kdtab(moment, normalkraft, d_o, d_u, breite, hoehe, bn, ksi_opti
         zz = ks0._(MAXZ0, 3) * d
         as2 = 0.0
         as1 = msds / d * ks + normalkraft / sigma
+        eps_c2 = -0.64
+        eps_s1 = 25.0
         console.log("xx", xx, ks0._(MAXZ0, 2), MAXZ0)
     } else if (kd >= tab0._(iMin, bn)) {
         i = iMin + 1
