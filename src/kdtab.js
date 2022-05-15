@@ -5,7 +5,7 @@ export function kdtab(moment, normalkraft, d_o, d_u, breite, hoehe, bn, ksi_opti
 
     const MAXZ0 = 25, MAXS0 = 9, MAXZ1 = 15, MAXR = 10, MAXR_025 = 8, MAXKSGR = 4;    // 19
 
-    let as1, as2, error;
+    let as1, as2, eps_c2, eps_s1, error;
     let i, j;
     let d1, d2, xx, zz;
     let dx, dy, ks, msds, h, d, zs1, sigma, as;
@@ -46,7 +46,9 @@ export function kdtab(moment, normalkraft, d_o, d_u, breite, hoehe, bn, ksi_opti
             , 0.104, 0.087, 0.069, 0.048, 0.025
             , 0.743, 0.757, 0.769, 0.780, 0.790, 0.801, 0.813, 0.824, 0.836, 0.846
             , 0.854, 0.865, 0.875, 0.885, 0.896, 0.906, 0.916, 0.927, 0.939, 0.950
-            , 0.958, 0.966, 0.975, 0.983, 0.991];
+            , 0.958, 0.966, 0.975, 0.983, 0.991
+            , -3.50, -3.50, -3.50, -3.50, -3.50, -3.50, -3.50, -3.50, -3.50, -3.50, -3.50, -3.50, -3.50, -3.50, -3.50, -3.50, -3.50, -3.50, -3.50, -3.40, -2.89, -2.38, -1.84, -1.26, -0.64  // eps_c2
+            , 2.17, 2.48, 2.81, 3.11, 3.44, 3.83, 4.27, 4.79, 5.40, 5.93, 6.50, 7.26, 8.10, 9.12, 10.52, 11.91, 13.90, 16.56, 20.29, 25.0, 25.0, 25.0, 25.0, 25.0, 25.0];                    // eps_s1
 
     // ksi = 0,45
     const tab1_ =
@@ -130,7 +132,7 @@ export function kdtab(moment, normalkraft, d_o, d_u, breite, hoehe, bn, ksi_opti
 
     const tab0 = new TFArray2D(1, MAXZ0, 1, MAXS0);
     const tab1 = new TFArray2D(1, MAXZ1, 1, MAXS0);
-    const ks0 = new TFArray2D(1, MAXZ0, 1, 3);
+    const ks0 = new TFArray2D(1, MAXZ0, 1, 5);
     const rho1tab = new TFArray2D(1, MAXR, 1, 4);
 
     const tab1_0617 = new TFArray2D(1, MAXZ1, 1, MAXS0);
@@ -152,6 +154,8 @@ export function kdtab(moment, normalkraft, d_o, d_u, breite, hoehe, bn, ksi_opti
     ks2 = 0.0;
     xx = 0.0;
     zz = 0.0;
+    eps_c2 = 0.0;
+    eps_s1 = 0.0;
 
     d2d.initV(d2d_);
     ks1tab.initV(ks1tab_);
@@ -221,7 +225,7 @@ export function kdtab(moment, normalkraft, d_o, d_u, breite, hoehe, bn, ksi_opti
         zz = ks0._(MAXZ0, 3) * d
         as2 = 0.0
         as1 = msds / d * ks + normalkraft / sigma
-        console.log("xx",xx,ks0._(MAXZ0, 2),MAXZ0)
+        console.log("xx", xx, ks0._(MAXZ0, 2), MAXZ0)
     } else if (kd >= tab0._(iMin, bn)) {
         i = iMin + 1
         while (kd > tab0._(i, bn)) {
@@ -243,13 +247,21 @@ export function kdtab(moment, normalkraft, d_o, d_u, breite, hoehe, bn, ksi_opti
         xx = kx * d
 
         dy = ks0._(i, 3) - ks0._(i - 1, 3)
-        dx = tab0._(i, bn) - tab0._(i - 1, bn)
+        //dx = tab0._(i, bn) - tab0._(i - 1, bn)
         kz = dy / dx * (kd - tab0._(i - 1, bn)) + ks0._(i - 1, 3)
         zz = kz * d
+
+        dy = ks0._(i, 4) - ks0._(i - 1, 4)
+        eps_c2 = dy / dx * (kd - tab0._(i - 1, bn)) + ks0._(i - 1, 4)
+
+        dy = ks0._(i, 5) - ks0._(i - 1, 5)
+        eps_s1 = dy / dx * (kd - tab0._(i - 1, bn)) + ks0._(i - 1, 5)
 
     } else if (kd >= tab1._(1, bn) && ksi_option === 1) {    // 0,45
 
         xx = 0.45 * d
+        eps_c2 = -3.50
+        eps_s1 = 4.30
 
         //       write (iout,*) 'mit Druckbewehrung'
         i = 2
@@ -308,6 +320,8 @@ export function kdtab(moment, normalkraft, d_o, d_u, breite, hoehe, bn, ksi_opti
     } else if (kd >= tab1_0617._(1, bn) && ksi_option === 2) {           // 0,617
 
         xx = 0.617 * d
+        eps_c2 = -3.50
+        eps_s1 = 2.17
 
         //       write (iout,*) 'mit Druckbewehrung'
         i = 2
@@ -366,6 +380,8 @@ export function kdtab(moment, normalkraft, d_o, d_u, breite, hoehe, bn, ksi_opti
     } else if (kd >= tab1_025._(1, bn) && ksi_option === 0) {           // 0,25
 
         xx = 0.25 * d
+        eps_c2 = -3.50
+        eps_s1 = 10.5
 
         //       write (iout,*) 'mit Druckbewehrung'
         i = 2
@@ -435,5 +451,5 @@ export function kdtab(moment, normalkraft, d_o, d_u, breite, hoehe, bn, ksi_opti
     }
 
     console.log("as", as1, as2);
-    return [as1, as2, error, kd, ks, ks1, ks2, xx, zz];
+    return [as1, as2, error, kd, ks, ks1, ks2, xx, zz, eps_c2, eps_s1];
 }
